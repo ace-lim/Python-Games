@@ -56,16 +56,16 @@ def main():
         d_y = 0
 
         # Move the square based on arrow keys
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_a]:
             d_x = -v * d_t
           
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_d]:
             d_x = v * d_t
           
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_w]:
             d_y = -v * d_t
           
-        if keys[pygame.K_DOWN]:
+        if keys[pygame.K_s]:
             d_y = v * d_t
            
         # Update the position of the square
