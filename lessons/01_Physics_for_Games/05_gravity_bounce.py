@@ -18,13 +18,20 @@ class GameSettings:
     square_color: tuple = (0, 0, 0)  # Black
     background_color: tuple = (255, 255, 255)  # White
     fps: int = 30
-    gravity: float = 60.0  # Acceleration due to gravity
+    gravity: float = 60  # Acceleration due to gravity
     jump_velocity_y: float = 200.0  # Initial jump velocity in y direction
     jump_velocity_x: float = 100.0  # Initial jump velocity in x direction
     d_t: float = 1.0/30  # Time step for physics calculations
 
 # Initialize Pygame
 pygame.init()
+
+SCREEN_WIDTH, SCREEN_HEIGHT = 600, 600
+SQUARE_SIZE = 50
+SQUARE_COLOR = (0, 128, 255) # Red-Green-Blue color in the range 0-255
+BACKGROUND_COLOR = (255, 255, 255) # White
+SQUARE_SPEED = 300 
+FPS = 60
 
 # Initialize game settings
 settings = GameSettings()
@@ -41,12 +48,18 @@ y_pos = settings.screen_height - settings.square_size
 velocity_x = 0
 velocity_y = 0
 x_direction = 1  # Either 1 or -1, to keep track of direction after hitting the ground
-
+v = SQUARE_SPEED  # Speed of the square in pixels per second
+d_t = 1 / FPS  # Time step for physics calculations
 is_jumping = False
 
+
+x = SCREEN_WIDTH // 2 - SQUARE_SIZE // 2
+y = SCREEN_HEIGHT // 2 - SQUARE_SIZE // 2
+    
 # Main loop
 running = True
 clock = pygame.time.Clock()
+keys = pygame.key.get_pressed()
 
 while running:
 
@@ -54,7 +67,26 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+    d_x = 0
+    d_y = 0
 
+    #     # Move the square based on arrow keys
+    if keys[pygame.K_a]:
+        d_x = -v * d_t
+          
+    if keys[pygame.K_d]:
+        d_x = v * d_t
+          
+    if keys[pygame.K_w]:
+        d_y = -v * d_t
+          
+    if keys[pygame.K_s]:
+        d_y = v * d_t
+           
+     
+    
+    x = x + d_x
+    y = y + d_y
     # Continuously jump. If the square is not jumping, make it jump
     if is_jumping is False:
         # Jumping means that the square is going up. The top of the 
@@ -62,7 +94,7 @@ while running:
         # we need to have a negative y velocity
         
         velocity_y = -settings.jump_velocity_y
-        velocity_x = settings.jump_velocity_x * x_direction
+        #velocity_x = settings.jump_velocity_x * x_direction
         
         is_jumping = True
         
@@ -100,6 +132,10 @@ while running:
         velocity_y = 0
         velocity_x = 0
         is_jumping = False
+   
+
+        # Calculate the change tin the position
+
 
     # Fill the screen with background color (clears previous frame)
     screen.fill(settings.background_color)

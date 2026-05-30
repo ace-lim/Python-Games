@@ -27,11 +27,11 @@ class GameSettings:
     player_size: int = 10
     player_x: int = 100 # Initial x position of the player
    
-    jump_velocity: int = 200
+    jump_velocity: int = 100
     white: tuple = (255, 255, 255)
     black: tuple = (0, 0, 0)
 
-    gravity: float = 60.0 # acceleration, the change in velocity per frame
+    gravity: float = 100# acceleration, the change in velocity per frame
     d_t: float = 1.0/30
     m: float = 2.0 # mass of the player, used to calculate acceleration
 
@@ -52,7 +52,7 @@ is_jumping = False
 # Main game loop
 running = True
 clock = pygame.time.Clock()
-
+d_v_y=0
 while running:
 
     # Handle events, such as quitting the game
@@ -60,41 +60,45 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     
-    d_v_y = 0
+    
 
  
     keys = pygame.key.get_pressed()
     
+    
+
+    #d_v_y = -settings.jump_velocity
     a_y = settings.gravity
+    if keys[pygame.K_SPACE] and is_jumping == False:
+        is_jumping=True
+        print (settings.jump_velocity)
+        d_v_y = -settings.jump_velocity
+            
+        
+
+           # acelleration in sht y direction
+        
 
     # Change in the velocity due to accelleration
     d_v_y += a_y * settings.d_t
 
-    # Change in the position due to the velocity
+# Change in the position due to the velocity
     d_y = d_v_y * settings.d_t
 
     player.y += d_y
-
-    #d_v_y = -settings.jump_velocity
-
-    if keys[pygame.K_SPACE]:
-        print (settings.jump_velocity - a_y)
-        d_v_y = -settings.jump_velocity + a_y
-        
-
-           # acelleration in sht y direction
-
+    #if keys[pygame.K_SPACE] == False:
+        #d_v_y = settings.jump_velocity*a_y
     # Continuously jump. If the player is not jumping, initialize a new jump
    #if is_jumping is False:
     
         # Jumping means that the player is going up. The top of the 
         # screen is y=0, and the bottom is y=SCREEN_HEIGHT. So, to go up,
         # we need to have a negative y velocity
-   
-    #if keys[pygame.K_SPACE] == False:
-        #d_v_y = settings.jump_velocity
+    
+    # if keys[pygame.K_SPACE] == False:
+    #     d_v_y = settings.jump_velocity
 
-        #is_jumping = True
+        # is_jumping = False
 
     # acelleration in sht y direction
     #a_y = settings.gravity
@@ -115,6 +119,7 @@ while running:
     # and stop the player from falling
     if player.bottom >= settings.screen_height:
         player.bottom = settings.screen_height 
+        is_jumping = False
        # if keys[pygame.K_SPACE]:
           #  d_v_y = -settings.jump_velocity
           #  is_jumping = False
