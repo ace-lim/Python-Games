@@ -20,8 +20,8 @@ class GameSettings:
     fps: int = 30
     gravity: float = 60  # Acceleration due to gravity
     jump_velocity_y: float = 200.0  # Initial jump velocity in y direction
-    jump_velocity_x: float = 75.0  # Initial jump velocity in x direction
-    d_t: float = 1.0/30  # Time step for physics calculations
+    jump_velocity_x: float = 100.0  # Initial jump velocity in x direction
+    d_t: float = 1.0/5  # Ti step for physics calculations
 
 # Initialize Pygame
 pygame.init()
@@ -53,7 +53,11 @@ clock = pygame.time.Clock()
 
 
 while running:
-    
+    if y_pos >= 480 and velocity_y>0:
+        velocity_y = -velocity_y
+        
+        velocity_y=-10
+    print (velocity_y)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -62,10 +66,17 @@ while running:
     keys = pygame.key.get_pressed()
     x_pos += velocity_x*settings.d_t
     y_pos += velocity_y*settings.d_t
-    velocity_y*0.98
     
-
-    if keys[pygame.K_SPACE] and velocity_y==0
+   
+    velocity_y=velocity_y*0.99
+    
+    if abs(velocity_y) <=0.1:
+        velocity_y=0
+        is_jumping=False
+        print("hallo")
+    
+    
+    if keys[pygame.K_SPACE] and velocity_y==0:
         # Jumping means that the square is going up. The top of the 
         # screen is y=0, and the bottom is y=screen_height. So, to go up,
         # we need to have a negative y velocity
@@ -73,8 +84,8 @@ while running:
         is_jumping = True
         print (settings.jump_velocity_x)
         velocity_y = -settings.jump_velocity_y
-    if velocity_y==0
-        velocity_y += settings.gravity * settings.d_t
+    #if velocity_y==0:
+        #velocity_y += settings.gravity * settings.d_t
         #y_pos += velocity_y * settings.d_t
     if keys[pygame.K_a] and is_jumping == False:
         is_jumping = True
@@ -115,7 +126,7 @@ while running:
     # If the square hits one side of the screen or the other, bounce the square
     if x_pos <= 0 or x_pos + settings.square_size >= settings.screen_width:
         velocity_x = -velocity_x
-        
+        velocity_x = velocity_x*0.99
         # Update direction tracking
         x_direction = -x_direction 
         # This way is more reliable, since it will always be 1 or -1 and direction is tied to velocity
@@ -125,13 +136,17 @@ while running:
     # If the square hits the top of the screen, bounce the square
     if y_pos <= 0:
         velocity_y = -velocity_y
+        velocity_y = 150
+        velocity_y=velocity_y*0.8
+    
+    
 
     # If the square hits the ground, stop the square from falling.
-    if y_pos + settings.square_size > settings.screen_height:
-        y_pos = settings.screen_height - settings.square_size
-        velocity_y = 0
-        velocity_x = 0
-        #is_jumping = False
+    #if y_pos + settings.square_size > settings.screen_height:
+        #y_pos = settings.screen_height - settings.square_size
+        #velocity_y = 0
+        #velocity_x = 0
+        is_jumping = False
    
 
         # Calculate the change tin the position
