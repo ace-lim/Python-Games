@@ -1,5 +1,15 @@
-# Run Me!
-
+#1. Copy the code for Person, Parent and Child into a new file.
+#2. Change the code so everyone has a first name and a last name.
+#3. Ensure that everyone in the family has the same last name
+#4. Add a method to display the full name of the person.
+#5. Notice that when you set the spouse of a Parent, the spouse is also set as
+ #  the spouse of the spouse. So, you only have to set the spouse for oe of them.
+ #  Make the 'parent' argument of CHil work the same way: for each of the
+ #  parents of the child, ensure that the child is set as a child of the parent.
+  # Then you can remove the '.ad_child' calls. 
+#6. Write a function, print_family, that takes just one parent, and prints out
+#   the entire family.
+    
 class Person:
     """Person represents a person in our system."""
 
@@ -26,8 +36,8 @@ class Parent(Person):
         if spouse:
             self.spouse = spouse
             spouse.spouse = self
-        
-        self.spouse = None
+        else:
+            self.spouse = None
 
     def add_child(self, child: Person):
         """Adds a child to the parent's list of children."""
@@ -56,6 +66,9 @@ class Child(Person):
         """Initializes a new Child object."""
         super().__init__(name, age)  # Call Person.__init__ to initialize the name and age attributes
         self.parents = parents
+        for parent in parents:
+            parent.child = self
+        
 
     def say_hello(self, message: str):
         """Prints a greeting to the console."""
@@ -67,16 +80,20 @@ class Child(Person):
 mom = Parent("Alice Jeb", 35)
 dad = Parent("Bob Jeb", 40, mom)
 
+mom.name = ("Alice Jeb")
+dad.name = ("Bob Jeb")
+
 charlie = Child("Charlie Jeb", 10, [mom, dad])
 dahlia = Child("Dahlia Jeb", 8, [mom, dad])
 
 # Connect the children to the parents
-mom.add_child(charlie)
-mom.add_child(dahlia)
-dad.add_child(charlie)
-dad.add_child(dahlia)
-
+def print_family():
+    print(mom.name)
+    print(dad.name)
+    print(charlie.name)
+    print(dahlia.name)
 
 mom.say_hello("Hello!") # Call the say_hello method of the mom object
-print()
 dahlia.say_hello("Yo!")
+
+print_family()
