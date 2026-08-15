@@ -61,12 +61,45 @@ class Turtle:
         self.x += dx
         self.y -= dy
 
-        # Draw line to the new position
+        
+        
         pygame.draw.line(self.screen, black, (start_x, start_y), (self.x, self.y), 2)
+        # Draw line to the new position
+        #pygame.draw.line(self.screen, black, (start_x, start_y), (self.x, self.y), 2)
 
     def left(self, angle):
         # Turn left by adjusting the angle counterclockwise
         self.angle = (self.angle + angle) % 360
+    def right(self, angle):
+        self.amgle = (self.angle - angle) % 360
+
+class Right(Turtle): 
+    def __init__(self, screen, x: int, y: int, color):
+        super().__init__(screen, x, y)
+        self.color = color
+    def colors(self, color):
+        self.color = color
+    def forward(self, distance):
+        # Calculate new position based on current angle
+        radian_angle = math.radians(self.angle)
+
+        start_x = self.x  # Save the starting position
+        start_y = self.y
+
+        # Calculate the new position displacement
+        dx = math.cos(radian_angle) * distance
+        dy = math.sin(radian_angle) * distance
+
+        # Update the turtle's position
+        self.x += dx
+        self.y -= dy
+
+        
+        pygame.draw.line(self.screen, self.color, (start_x, start_y), (self.x, self.y), 2)
+
+
+        
+        
 
 
 # Main loop
@@ -82,9 +115,12 @@ pygame.display.set_caption("Turtle Style Drawing")
 # Colors
 white = (255, 255, 255)
 black = (0, 0, 0)
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 100, 255)
 
 screen.fill(white)
-turtle = Turtle(screen, screen.get_width() // 2, screen.get_height() // 2)  # Start at the center of the screen
+turtle = Right(screen, screen.get_width() // 2, screen.get_height() // 2, blue)  # Start at the center of the screen
 
 # Draw a square using turtle-style commands
 for _ in range(4):
