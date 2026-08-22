@@ -28,9 +28,9 @@ Assignment 4:
 
 """
 import math
-
 import pygame
 
+pen_down=True
 
 def event_loop():
     """Wait until user closes the window"""
@@ -62,7 +62,7 @@ class Turtle:
         self.y -= dy
 
         
-        
+    
         pygame.draw.line(self.screen, black, (start_x, start_y), (self.x, self.y), 2)
         # Draw line to the new position
         #pygame.draw.line(self.screen, black, (start_x, start_y), (self.x, self.y), 2)
@@ -70,15 +70,23 @@ class Turtle:
     def left(self, angle):
         # Turn left by adjusting the angle counterclockwise
         self.angle = (self.angle + angle) % 360
+
     def right(self, angle):
-        self.amgle = (self.angle - angle) % 360
+        self.angle = (self.angle - angle) % 360
 
 class Right(Turtle): 
-    def __init__(self, screen, x: int, y: int, color):
+    def __init__(self, screen, x: int, y: int, color=(255, 0, 0)):
         super().__init__(screen, x, y)
         self.color = color
+        self.pen = True
     def colors(self, color):
         self.color = color
+    def pen_up(self):
+        self.pen=False
+    def pen_down(self):
+        self.pen=True
+
+
     def forward(self, distance):
         # Calculate new position based on current angle
         radian_angle = math.radians(self.angle)
@@ -94,8 +102,8 @@ class Right(Turtle):
         self.x += dx
         self.y -= dy
 
-        
-        pygame.draw.line(self.screen, self.color, (start_x, start_y), (self.x, self.y), 2)
+        if self.pen:
+            pygame.draw.line(self.screen, self.color, (start_x, start_y), (self.x, self.y), 2)
 
 
         
@@ -120,12 +128,36 @@ green = (0, 255, 0)
 blue = (0, 100, 255)
 
 screen.fill(white)
-turtle = Right(screen, screen.get_width() // 2, screen.get_height() // 2, blue)  # Start at the center of the screen
 
-# Draw a square using turtle-style commands
-for _ in range(4):
-    turtle.forward(100)  # Move forward by 100 pixels
-    turtle.left(90)  # Turn left by 90 degrees
+
+
+turtle = Right(screen, screen.get_width() // 2, screen.get_height() // 2)  # Start at the center of the screen
+
+#turtle.pen_up()
+
+
+#for _ in range(3):
+    
+#    turtle.forward(200)  # Move forward by 100 pixels
+#    turtle.left(120)  # Turn left by 90 degrees
+
+#turtle.pen_up()
+#turtle.colors(blue)
+#turtle.right(90)
+#turtle.forward(100)
+#turtle.pen_down()
+#for _ in range(100000):
+
+#    turtle.forward(1)
+#    turtle.right(1)
+#turtle.pen_up()
+#turtle.forward(100)
+#turtle.pen_down()
+#turtle.colors(black)
+#for _ in range(4):
+#    turtle.forward(100)
+#    turtle.right(90)
+
 
 # Display the drawing
 pygame.display.flip()

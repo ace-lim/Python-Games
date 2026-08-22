@@ -83,9 +83,14 @@ dad = Parent("Bob Jeb", 40, mom)
 mom.name = ("Alice Jeb")
 dad.name = ("Bob Jeb")
 
+
 charlie = Child("Charlie Jeb", 10, [mom, dad])
 dahlia = Child("Dahlia Jeb", 8, [mom, dad])
 
+mom.add_child(dahlia)
+dad.add_child(dahlia)
+mom.add_child(charlie)
+dad.add_child(charlie)
 # Connect the children to the parents
 def print_family():
     print(mom.name)
