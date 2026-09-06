@@ -28,14 +28,15 @@ class Colors:
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
     RED = (255, 0, 0)
+    PINK = (255, 16, 240)
 
 
 class GameSettings:
     """Settings for the game"""
     width: int = 500
     height: int = 500
-    player_width: int = 20
-    player_height: int = 20
+    #player_width: int = 102
+    #player_height: int = 102
 
     player_start_x: int = 100
     player_start_y: int = None
@@ -93,21 +94,24 @@ class Game:
 class Player:
     """Player class, just a bouncing rectangle"""
 
-    def __init__(self, game: Game):
+    def __init__(self, y: int, x: int, v_x, v_y, game: Game, color):
         self.game = game
         settings = game.settings
 
-        self.width = settings.player_width
-        self.height = settings.player_height
-      
+        self.color = color 
+
+    
+        self.width = 25#settings.player_width
+        self.height = 25#settings.player_height
+
         self.is_jumping = False
         self.v_jump = settings.jump_v_y
 
-        self.y = settings.player_start_y if settings.player_start_y is not None else settings.height - self.height
-        self.x = settings.player_start_x
+        self.y = y#settings.player_start_y if settings.player_start_y is not None else settings.height - self.height
+        self.x = x#settings.player_start_x
         
-        self.v_x = settings.v_0_x  # X Velocity
-        self.v_y = settings.v_0_y  # Y Velocity
+        self.v_x = v_x#settings.v_0_x  # X Velocity
+        self.v_y = v_y#settings.v_0_y  # Y Velocity
 
     def update(self):
         """Update player position, continuously jumping"""
@@ -144,14 +148,16 @@ class Player:
             self.is_jumping = True
 
     def draw(self, screen):
-        pygame.draw.rect(screen, Colors.BLACK, (self.x, self.y, self.width, self.height))
+        pygame.draw.rect(screen, self.color, (self.x, self.y, self.width, self.height))
 
 
 settings = GameSettings()
 game = Game(settings)
 
-p1 = Player(game)
+p1 = Player(10, 10, 5000, 5000, game, Colors.RED)
+p2 = Player(10, 20, 20, 10, game, Colors.PINK)
 game.add_player(p1)
+game.add_player(p2)
 
 
 game.run()

@@ -107,7 +107,8 @@ class Right(Turtle):
 
 
         
-        
+def get_x_y(turtle: Turtle):
+    print({turtle.x}, {turtle.y})
 
 
 # Main loop
@@ -134,30 +135,32 @@ screen.fill(white)
 turtle = Right(screen, screen.get_width() // 2, screen.get_height() // 2)  # Start at the center of the screen
 
 #turtle.pen_up()
+get_x_y(turtle)
 
-
-#for _ in range(3):
+for _ in range(3):
     
-#    turtle.forward(200)  # Move forward by 100 pixels
-#    turtle.left(120)  # Turn left by 90 degrees
+    turtle.forward(200)  # Move forward by 100 pixels
+    turtle.left(120)  # Turn left by 90 degrees
 
-#turtle.pen_up()
-#turtle.colors(blue)
-#turtle.right(90)
-#turtle.forward(100)
-#turtle.pen_down()
-#for _ in range(100000):
+get_x_y(turtle)
 
-#    turtle.forward(1)
-#    turtle.right(1)
-#turtle.pen_up()
-#turtle.forward(100)
-#turtle.pen_down()
-#turtle.colors(black)
-#for _ in range(4):
-#    turtle.forward(100)
-#    turtle.right(90)
+turtle.pen_up()
+turtle.colors(blue)
+turtle.right(90)
+turtle.forward(100)
+turtle.pen_down()
+for _ in range(100000):
+    turtle.forward(1)
+    turtle.right(1)
+turtle.pen_up()
+turtle.forward(100)
+turtle.pen_down()
+turtle.colors(black)
+for _ in range(4):
+    turtle.forward(100)
+    turtle.right(90)
 
+get_x_y(turtle)
 
 # Display the drawing
 pygame.display.flip()
