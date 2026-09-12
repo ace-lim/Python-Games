@@ -1,5 +1,5 @@
 """
-Gravity bounce using Vectors. 
+Gravity bounce using Vectors.
 
 This version of the Gravity Bounce program uses Pygame's Vector2 class to handle
 the player's position and velocity. This makes the code more readable and
@@ -56,6 +56,17 @@ class Game:
         # Turn Gravity into a vector
         self.gravity = pygame.Vector2(0, self.settings.gravity)
 
+
+
+
+
+
+
+
+
+
+
+
     def run(self):
         """Main game loop"""
         player = Player(self)
@@ -71,7 +82,6 @@ class Game:
             player.draw(self.screen)
             pygame.display.flip()
             self.clock.tick(self.settings.frame_rate)
-
 
         pygame.quit()
 
@@ -215,12 +225,9 @@ class Player:
     def update_jump(self):
         keys = pygame.key.get_pressed()
         thrust = self.vel * 0.1
-        pygame.draw
         """Handle the player's jumping logic"""
         if keys[pygame.K_SPACE]:
-            self.vel = self.vel + thrust
-            if abs(self.vel.x) <= 1:
-                self.vel.x = 1
+            self.vel.y -= GameSettings.player_jump_velocity
 
 
 
@@ -230,7 +237,7 @@ class Player:
         # check if the player is at the bottom.
         #if self.at_bottom():
             #self.vel += self.v_jump
-         
+
 
     def draw(self, screen):
         pygame.draw.rect(screen, Colors.PLAYER_COLOR, (self.pos.x, self.pos.y, self.width, self.height))
