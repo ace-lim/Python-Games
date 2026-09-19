@@ -47,7 +47,7 @@ class GameSettings:
 
     jump_v_y: float = 400
 
-    FPS = 30
+    FPS = 180
     d_t = 1 / FPS # Time step
 
 
@@ -154,7 +154,7 @@ class Player:
 settings = GameSettings()
 game = Game(settings)
 
-p1 = Player(10, 10, 5000, 5000, game, Colors.RED)
+p1 = Player(150, 10, 5000, 5000, game, Colors.RED)
 p2 = Player(10, 20, 20, 10, game, Colors.PINK)
 game.add_player(p1)
 game.add_player(p2)

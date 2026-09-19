@@ -14,7 +14,7 @@ class Settings:
     PLAYER_COLOR = (0, 0, 255)
     BACKGROUND_COLOR = (255, 255, 255)
     TEXT_COLOR = (0, 0, 0)
-    FPS = 30
+    FPS = 60
     ANGLE_CHANGE = 3
     LENGTH_CHANGE = 5
     INITIAL_LENGTH = 100
@@ -114,12 +114,15 @@ def main():
                 player.direction_vector = player.direction_vector.rotate(-Settings.ANGLE_CHANGE)
             elif keys[pygame.K_RIGHT]:
                 player.direction_vector = player.direction_vector.rotate(Settings.ANGLE_CHANGE)
-                
+
+        
         if keys[pygame.K_UP]:
             player.direction_vector.scale_to_length(player.direction_vector.length() + Settings.LENGTH_CHANGE)
         elif keys[pygame.K_DOWN]:
             player.direction_vector.scale_to_length(player.direction_vector.length() - Settings.LENGTH_CHANGE)
-        elif keys[pygame.K_SPACE]:
+
+        
+        if keys[pygame.K_SPACE]:
             player.move()
                 
 
