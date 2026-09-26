@@ -32,7 +32,7 @@ class GameSettings:
     player_v_x: float = 4  # Initial x velocity
     player_width: int = 20
     player_height: int = 20
-    player_jump_velocity: float = 15
+    player_jump_velocity: float = 100
     frame_rate: int = 150
 
 
@@ -52,9 +52,14 @@ class Game:
 
         self.screen = pygame.display.set_mode((self.settings.width, self.settings.height))
         self.clock = pygame.time.Clock()
+    def vec_to_center(self, pos):
+        pos=pos
+        vector = (250-pos.x, 250-pos.y)
+        return vector
+        
 
         # Turn Gravity into a vector
-        self.gravity = pygame.Vector2(0, self.settings.gravity)
+        
 
 
     #def draw(self, show_line=True):
@@ -103,6 +108,8 @@ class Player:
         # Player position
         self.pos = pygame.Vector2(settings.player_start_x,
                                   settings.player_start_y if settings.player_start_y is not None else settings.height - self.height)
+
+        self.gravity = pygame.Vector2(0, settings.gravity)
 
         # Player's velocity
         self.vel = pygame.Vector2(settings.player_v_x, settings.player_v_y)  # Velocity vector
@@ -179,8 +186,8 @@ class Player:
     def update_v(self):
         """Update the player's velocity based on gravity and bounce on edges"""
 
-        self.vel += self.gravity  # Add gravity to the velocity
-        drag = self.vel * -0.01
+        self.vel += self.gravity*0.2 # Add gravity to the velocity
+        drag = self.vel * -0.001
 
         self.vel = self.vel + drag
 
@@ -188,9 +195,9 @@ class Player:
 
         if self.at_bottom() and self.going_down():
             self.vel.y = self.vel.y * -1
-            if abs(self.vel.y) <= 5:
-                self.vel.y=0
-                self.pos.y = 490
+            #if abs(self.vel.y) <= 5:
+                #self.vel.y=0
+                #self.pos.y = 490
 
 
         if self.at_top() and self.going_up():
@@ -228,12 +235,18 @@ class Player:
     def update_jump(self):
         keys = pygame.key.get_pressed()
         thrust = self.vel * 0.1
-        pygame.draw
+        #pygame.draw
         """Handle the player's jumping logic"""
         if keys[pygame.K_SPACE]:
             self.vel = self.vel + thrust
-            if abs(self.vel.x) <= 1:
-                self.vel.x = 1
+        if keys[pygame.K_UP]:
+            self.vel = self.vel*1.05
+        if keys[pygame.K_DOWN]:
+            self.vel = self.vel*0.9
+        if keys[pygame.K_LEFT]:
+            self.vel = self.vel.rotate(-1)
+        if keys[pygame.K_RIGHT]:
+            self.vel = self.vel.rotate(1)
 
 
 
